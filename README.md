@@ -11,8 +11,11 @@ For example,
   - V120505: Food Production and Services
   - V200493: Culinary Arts
 
-Depends on [openpyxl](https://pypi.org/project/openpyxl/) to read the spreadsheet.
 run `vcode.py` to generate `vcode.json` from the spreadsheet.
+
+Note: Depends on [openpyxl](https://pypi.org/project/openpyxl/) to read the spreadsheet.
+
 And then since you have python:
-run: `python -m http.server`
-and visit: `open http://localhost:8000/vcode.html` to see 'em all.
+
+1. run: `python -m http.server`
+2. visit: `open http://localhost:8000/vcode.html` to see 'em all.
