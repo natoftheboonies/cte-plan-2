@@ -40,10 +40,27 @@ def main(sheet=status_sheet):
             }
             vcode["cips"].append(cip)
 
+    # filter to plan 2 routes
     business = [route for route in routes if "Industry" in route["type"]]
 
+    # transform from by-vcode to by-cip
+    bycip = dict()
+    for route in business:
+        for vcode in route["vcodes"]:
+            for cip in vcode["cips"]:
+                cipObj = bycip.get(
+                    cip["code"], {"code": cip["code"], "name": cip["name"], "vcode": []}
+                )
+                cipObj["vcode"].append(
+                    {"vcode": vcode["vcode"], "certification": vcode["certification"]}
+                )
+                bycip[cipObj["code"]] = cipObj
+
+    # filter cips with multiple vcodes
+    multis = [cip for cip in bycip.values() if len(cip["vcode"]) > 1]
+
     with open("vcode.json", "w") as fp:
-        json.dump(business, fp)
+        json.dump(multis, fp)
 
 
 # then run: python -m http.server

@@ -4,33 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Plan 2 Routes: CIPs in multiple V-Codes</title>
   </head>
   <body>
-    <table id="tb1" border="1">
-      <tr>
-        <th>name</th>
-        <th>type</th>
-        <th>route</th>
-      </tr>
-    </table>
+    <h1>Plan 2 Routes: CIPs in multiple V-Codes</h1>
+    <ul id="tb1"></ul>
   </body>
   <script>
     fetch("vcode.json")
       .then((response) => response.json())
       .then((data) => {
+        data.sort((a, b) => a.name.localeCompare(b.name));
         for (var i = 0; i < data.length; i++) {
           let name = data[i].name;
-          let type = data[i].type;
-          let vcodes = data[i].vcodes
-            .map((vcode) => `<li>${vcode.vcode}:${vcode.certification}</li>`)
+          let code = data[i].code;
+          let vcodes = data[i].vcode
+            .map((vcode) => `<li>${vcode.vcode}: ${vcode.certification}</li>`)
             .join("");
           document.querySelector("#tb1").innerHTML += `
-                        <tr>
-                            <td>${name}</td>
-                            <td>${type}</td>
-                            <td><ul>${vcodes}</ul></td>
-                        </tr>`;
+                        <li>${name}: ${code}
+                            <ul>${vcodes}</ul>
+                        </li>
+                        `;
         }
       });
   </script>
